@@ -12,6 +12,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
+		byebug
 	  @post = Post.new
 	  @post.title = params[:title]
 	  @post.description = params[:description]
@@ -24,8 +25,8 @@ class PostsController < ApplicationController
 	end
 
 	def update
-	  @post = Post.find(params[:id])
-	  @post.update(title: params[:title], description: params[:description])
+	  @post = Post.find_by(id: params[:id])
+	  @post.update(params.require(:post).permit(:title, :description))
 	  redirect_to post_path(@post)
 	end
 end
